@@ -8,8 +8,17 @@ function App() {
     age: '',
     ph_no: '',
     email: '',
-    submit: false
+    submit: false,
+    error: ''
   });
+
+  const handleSubmit = () =>{
+    if(userData.name && userData.age && userData.ph_no && userData.email) {
+      setUserData({...userData, submit: true});
+    } else {
+      setUserData({...userData, error: "Please Fill all the details"});
+    }
+  }
   return (
     <>
       <div className="container w-25 mt-5 text-white">
@@ -27,13 +36,16 @@ function App() {
         </div>
         <div className="form-group">
           <label>Email:</label>
-          <input type="text" id="name" name="name" className="form-control" onChange={(e) => setUserData({ ...userData, email: e.target.value })} />
+          <input type="email" id="name" name="name" className="form-control" onChange={(e) => setUserData({ ...userData, email: e.target.value })} />
         </div>
         <div>
-          <button className='btn btn-danger w-100 mt-3' onClick={() => setUserData({ ...userData, submit: true })}>Submit</button>
+          <button className='btn btn-danger w-100 mt-3' onClick={ handleSubmit }>Submit</button>
+          {
+            userData.error &&
+            <p className='text-danger'>{userData.error}</p>
+          }
         </div>
       </div>
-
       {
         userData.submit && <div className="container w-25 mt-5 text-white border border-primary">
           <span><strong>Name:</strong> {userData.name}</span>
